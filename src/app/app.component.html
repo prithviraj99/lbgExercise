@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12" *ngIf="!formSubmitted">
+      <h2 class="titleClass">{{title}}</h2>
+      <form #randomForestInputsForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              <label for="inputFile">Input file</label>
+              <input type="file" id="inputFile" class="form-control" ngModel name="inputFile" #inpFile="ngModel" required>
+              <span class="help-block" *ngIf="!inpFile.valid && inpFile.dirty">Input File is required</span>
+          </div>
+          <div class="form-group">
+              <label for="outputFile">Output file</label>
+              <input type="file" id="outputFile" class="form-control" ngModel name="outputFile" #outFile="ngModel" required>
+              <span class="help-block" *ngIf="!outFile.valid && outFile.dirty">Output File is required</span>
+          </div>
+          <div class="form-group">
+              <label for="numClasses">Number of Classes</label>
+              <input type="number" id="numClasses" class="form-control" #noClasses="ngModel" [ngModel]="numClassesDefault" name="numClasses" [min]="1" [max]="10" step="1" required>
+              <span class="help-block" *ngIf="!noClasses.valid && noClasses.value==undefined">Number of Classes is required</span>
+              <span class="help-block" *ngIf="!noClasses.valid && noClasses.value!=undefined">Min: 1 and Max: 10</span>
+          </div>
+          <div class="clearfix visible-lg visible-md"></div>
+          <div class="form-group">
+              <label for="numTrees">Number of Trees</label>
+              <input type="number" id="numTrees" class="form-control" #noTrees="ngModel" [ngModel]="numTreesDefault" name="numTrees" [min]="1" [max]="10" step="1" required>
+              <span class="help-block" *ngIf="!noTrees.valid && noTrees.value==undefined">Number of Trees is required</span>
+              <span class="help-block" *ngIf="!noTrees.valid && noTrees.value!=undefined">Min: 1 and Max: 10</span>
+          </div>
+          <div class="form-group">
+              <label for="maxDepth">Max Depth</label>
+              <input type="number" id="maxDepth" class="form-control" #maxDepth="ngModel" [ngModel]="maxDepthDefault" name="maxDepth" [min]="1" [max]="10" step="1" required>
+              <span class="help-block" *ngIf="!maxDepth.valid && maxDepth.value==undefined">Max Depth is required</span>
+              <span class="help-block" *ngIf="!maxDepth.valid && maxDepth.value!=undefined">Min: 1 and Max: 10</span>
+          </div>
+          <div class="form-group">
+              <label for="maxBins">Max Bins</label>
+              <input type="number" id="maxBins" class="form-control" #maxBins="ngModel" [ngModel]="maxBinsDefault" name="maxBins" [min]="1" [max]="10" step="1" required>
+              <span class="help-block" *ngIf="!maxBins.valid && maxBins.value==undefined">Max Depth is required</span>
+              <span class="help-block" *ngIf="!maxBins.valid && maxBins.value!=undefined">Min: 1 and Max: 10</span>
+          </div>
+          <div class="clearfix visible-lg visible-md"></div>
+          <div class="form-group">
+              <label for="trainingSlice">Training Slice</label>
+              <input type="number" id="trainingSlice" class="form-control" #trainingSlice="ngModel" (input)="onTrainingSliceChange(trainingSlice)" [ngModel]="trainingSliceDefault" name="trainingSlice" [min]="0.01" [max]="0.99" step="0.01" required>
+              <span class="help-block" *ngIf="!trainingSlice.valid && trainingSlice.value==undefined">Training Slice is required</span>
+              <span class="help-block" *ngIf="!trainingSlice.valid && trainingSlice.value!=undefined">Min: 0.01 and Max: 0.99</span>
+          </div>
+          <div class="form-group">
+              <label for="testSlice">Test Slice</label>
+              <input type="number" id="testSlice" class="form-control" disabled [ngModel]="testSliceDefault" name="testSlice" required>
+          </div>
+          <div class="form-group">
+              <label for="featureSubsetStrategy">Feature Subset Strategy </label>
+              <select id="featureSubsetStrategy" class="form-control" [ngModel]="featureSubsetStrategyDefault" name="featureSubsetStrategy" required>
+                <option value="auto">auto</option>
+                <option value="option2">option2</option>
+                <option value="option3">option3</option>
+              </select>
+          </div>
+          <div class="clearfix visible-lg visible-md"></div>
+          <div class="form-group">
+              <label for="categoricalFeaturesInfo">Categorical Features Info </label>
+              <select id="categoricalFeaturesInfo" class="form-control" [(ngModel)]="categoricalFeaturesInfoDefault" name="categoricalFeaturesInfo">
+                <option *ngFor="let opt of options; let i = index" [value]="i">{{opt[1]}}</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="master">Master </label>
+              <select id="master" class="form-control" [ngModel]="masterDefault" name="master" required>
+                <option value="local">local</option>
+                <option value="option2">option2</option>
+                <option value="option3">option3</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="appName">App Name  </label>
+              <input type="text" id="appName" class="form-control" #appName="ngModel" [ngModel]="appNameDefault" name="appName" required>
+              <span class="help-block" *ngIf="!appName.valid && appName.touched">App Name is required</span>
+          </div>
+          <div class="clearfix">
+              <button class="btn btn-primary pull-right m-t-b-10" type="submit" [disabled]="!randomForestInputsForm.valid">Submit</button>
+          </div>
+      </form>
+    </div>
+    <div class="col-xs-12 col-sm-12" *ngIf="formSubmitted">
+      <h2 class="titleClass">Form Submitted Succesfully!!!</h2>
+      <div class="buttonDiv">
+          <button class="btn btn-primary" (click)="formSubmitted=false">Go Back</button>
+      </div>
+    </div>
+  </div>
+</div>
